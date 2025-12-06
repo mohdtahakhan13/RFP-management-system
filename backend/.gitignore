@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+
+# Personal documentation
+DEMO_SCRIPT.md
+WALKTHROUGH.md
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Data files
+data/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
