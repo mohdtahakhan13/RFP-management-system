@@ -637,7 +637,7 @@ const RFPDetail = () => {
                     disabled={selectedVendors.length === 0}
                     className="btn-primary disabled:opacity-50"
                   >
-                    Send to {selectedVendors.length} Vendor{selectedVendors.length !== 1 ? 's' : ''}
+                    Send 
                   </button>
                 </div>
               </div>

@@ -5,12 +5,11 @@ const Email = require('../models/Email');
 
 class EmailService {
   constructor() {
-    // Initialize SMTP transporter for sending emails
+    // Initialize SMTP transporter for sending emails (Mailtrap SMTP)
     if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
       this.transporter = nodemailer.createTransport({
-        host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-        port: parseInt(process.env.EMAIL_PORT) || 587,
-        secure: false,
+        host: process.env.EMAIL_HOST || 'sandbox.smtp.mailtrap.io',
+        port: parseInt(process.env.EMAIL_PORT) || 2525,
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASS

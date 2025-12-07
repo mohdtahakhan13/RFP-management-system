@@ -33,42 +33,43 @@ npm install
 
 ### c. Email Configuration
 
-1. **Enable 2-Step Verification** in your Google Account
-2. **Generate App Password**:
+1. **Setup Mailtrap (for Sending)**:
 
-   - Go to [Google App Passwords](https://myaccount.google.com/apppasswords)
-   - Select "Mail" → Generate
-   - Copy the 16-character password
+   - Create an account at [Mailtrap.io](https://mailtrap.io)
+   - Go to **Inboxes** → **SMTP Settings**
+   - Copy your `User`, `Password`, `Host`, and `Port`
 
-3. **Enable IMAP** in Gmail:
+2. **Setup Gmail (for Receiving)**:
 
-   - Gmail Settings → Forwarding and POP/IMAP → Enable IMAP
+   - **Enable 2-Step Verification** in your Google Account
+   - **Generate App Password**: [Google App Passwords](https://myaccount.google.com/apppasswords)
+   - **Enable IMAP** in Gmail Settings
 
-4. **Configure Backend Environment**:
+3. **Configure Backend Environment**:
    Create `backend/.env`:
 
    ```env
    PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/rfp_system
+   MONGODB_URI=mongodb://localhost:27017/rfp_management
    GEMINI_API_KEY=your_gemini_api_key
 
-   # Email (SMTP for sending, IMAP uses same credentials for Gmail)
-   EMAIL_HOST=smtp.gmail.com
-   EMAIL_PORT=587
-   EMAIL_USER=your-email@gmail.com
-   EMAIL_PASS=xxxx xxxx xxxx xxxx
-   EMAIL_FROM=your-email@gmail.com
+   # Email Sending (Mailtrap SMTP)
+   EMAIL_HOST=sandbox.smtp.mailtrap.io
+   EMAIL_PORT=2525
+   EMAIL_USER=your_mailtrap_user
+   EMAIL_PASS=your_mailtrap_password
+   EMAIL_FROM=noreply@rfpsystem.com
 
-   # IMAP Configuration (optional - defaults to EMAIL_USER/EMAIL_PASS)
+   # Email Receiving (Gmail IMAP)
    IMAP_HOST=imap.gmail.com
    IMAP_PORT=993
-   # IMAP_USER=your-email@gmail.com  # Optional: defaults to EMAIL_USER
-   # IMAP_PASS=xxxx xxxx xxxx xxxx   # Optional: defaults to EMAIL_PASS
+   IMAP_USER=your_gmail@gmail.com
+   IMAP_PASS=your_gmail_app_password
 
    FRONTEND_URL=http://localhost:5173
    ```
 
-5. **Configure Frontend Environment**:
+4. **Configure Frontend Environment**:
    Create `frontend/.env`:
    ```env
    VITE_API_URL=http://localhost:5000/api
@@ -90,7 +91,14 @@ Access the application at `http://localhost:5173`
 
 ### e. Seed Data / Initial Setup
 
-No seed scripts required. The system starts with empty collections. Create your first vendor and RFP through the UI to begin.
+To populate the database with test data (2 Vendors, 1 RFP, 2 Responses):
+
+```bash
+# From the root directory
+node backend/test/seedDemoData.js
+```
+
+This creates a ready-to-test scenario instantly.
 
 ---
 
@@ -201,7 +209,7 @@ No seed scripts required. The system starts with empty collections. Create your 
 | ----------------------------------------------- | ------------------------------------------------------------- |
 | Vendors reply to the same email thread          | Subject line matching depends on "RFP:" or "Re: RFP:" pattern |
 | Proposal emails are in plain text or basic HTML | Complex attachments (PDF, DOCX) are not parsed                |
-| Gmail is the email provider                     | SMTP/IMAP settings are Gmail-specific                         |
+| Hybrid Email Setup                              | SMTP via Mailtrap (testing) or Brevo (prod), IMAP via Gmail   |
 | Single currency per RFP                         | Multi-currency comparison not implemented                     |
 | English language proposals                      | AI parsing optimized for English text                         |
 

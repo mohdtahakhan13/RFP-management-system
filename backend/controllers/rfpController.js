@@ -95,7 +95,7 @@ exports.sendRFPToVendors = async (req, res) => {
     res.json({
       success: true,
       data: results,
-      message: `RFP sent to ${results.filter(r => r.status === 'sent').length} vendors`
+      message: `RFP sent to  vendors`
     });
   } catch (error) {
     res.status(500).json({
